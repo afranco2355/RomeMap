@@ -4,7 +4,7 @@ var COLISEUM = [12.492198710067786, 41.89031799322667];
 
 const map = new mapboxgl.Map({
     container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/standard',
+    style: 'mapbox://styles/mapbox/outdoors-v12',
     center: COLISEUM, // starting position [lng, lat]
     zoom: 13,
 });
@@ -65,3 +65,29 @@ function createMarkerElement(imageUrl, popup) {
 
     return markerElement;
 }
+
+// Define the coordinates and popup information for the new markers
+const newMarkerData = [
+    { coordinates: [12.476232911945134, 41.911127650206744], popupText: "Piazza di Popolo" },
+    { coordinates: [12.485314267767492, 41.89260602878462], popupText: "Forum Romanum" },
+    { coordinates: [12.46628672543862, 41.90322287531081], popupText: "Castel Sant Angelo" },
+    { coordinates: [12.498408378598487, 41.89771828543868], popupText: "Basilica di Santa Maria Maggiore" },
+    { coordinates: [12.482347533109445, 41.90579519909499], popupText: "Piazza di Spagna" },
+    { coordinates: [12.483116637462992, 41.89463055079719], popupText: "Monument of Vittorio Emanuele II" },
+    { coordinates: [12.45363054976591, 41.906583514445394], popupText: "Vatican Museums" },
+    { coordinates: [12.496253645934454, 41.90406505624478], popupText: "Piazza della Repubblica" }
+];
+
+// Add the new markers to the map
+newMarkerData.forEach(marker => {
+    // Create a DOM element for the marker
+    const el = document.createElement('div');
+    el.className = 'circle-marker';
+
+    // Create a marker with the DOM element
+    new mapboxgl.Marker(el)
+        .setLngLat(marker.coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 15 }) // Adjust the offset as needed
+            .setHTML(`<p>${marker.popupText}</p>`))
+        .addTo(map);
+});
